@@ -1,0 +1,51 @@
+
+<div>
+  {% if label %}
+    <label
+      for="{{ id }}"
+      style="{{ errors ? 'color: red;' : '' }}"
+    >
+      {{ label }}
+      {% if required %}
+        <span aria-hidden="true">*</span>
+        <span class="sr-only">(requis)</span>
+      {% endif %}
+      {% if required %}
+
+      {% endif %}
+
+    </label>
+  {% endif %}
+
+  {% set hasHelp = help or (block('help') is defined) and block('help') %}
+
+  {% block input %}
+    {% set inputStyle = errors ? 'border-color: red;' : ''%}
+    <input
+      {{ attributes.defaults({
+        id: id,
+        name: name,
+        style: inputStyle,
+        required: required,
+        value: value,
+      }) }}
+      {% if hasHelp %}aria-describedby="help-{{ id }}"{% endif %}
+    />
+  {% endblock %}
+
+  {% for error in errors %}
+    <p style="color: red">{{ error }}</p>
+  {% endfor %}
+
+  {% if hasHelp %}
+    <div
+      id="help-{{ id }}"
+    >
+      {% if help %}
+        <p>{{ help }}</p>
+      {% else %}
+        {% block help %}{% endblock %}
+      {% endif %}
+    </div>
+  {% endif %}
+</div>

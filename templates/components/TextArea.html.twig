@@ -1,0 +1,14 @@
+{% extends 'components/Input.html.twig' %}
+
+{% block input %}
+{% set inputStyle = errors ? 'border: red;' : ''%}
+<textarea
+  {{ attributes.defaults({
+    id: id,
+    name: name,
+    style: inputStyle,
+    required: required,
+    rows: 4,
+  }) }}
+>{{ value }}</textarea>
+{% endblock %}

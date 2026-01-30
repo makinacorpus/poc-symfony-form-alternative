@@ -1,0 +1,40 @@
+{% extends './base.html.twig' %}
+{% block title %}A new way to handle forms in Symfony{% endblock %}
+{% block body %}
+    <h1>A new way to handle forms in Symfony</h1>
+    <twig:Form method="POST">
+        <twig:Input
+            id="name"
+            name="name"
+            label="Name"
+            required
+            :value="values ? values.name"
+            :errors="errors.name"
+        />
+        <twig:Input
+            id="email"
+            name="email"
+            label="Email"
+            required
+            type="email"
+            :value="values ? values.email"
+            :errors="errors.email"
+        />
+        <twig:Input
+            id="age"
+            name="age"
+            label="Age"
+            type="number"
+            :value="values ? values.age"
+            :errors="errors.age"
+        />
+        <twig:TextArea
+            id="message"
+            name="message"
+            label="Message"
+            :value="values ? values.age"
+            :errors="errors.message"
+        />
+        <button type="submit">Submit</button>
+    </twig:Form>
+{% endblock %}

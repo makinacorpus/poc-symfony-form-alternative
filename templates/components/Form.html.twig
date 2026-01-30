@@ -1,0 +1,15 @@
+<form {{ attributes }}>
+    {% if errors is defined and errors.root is defined %}
+        <div>
+            {% for error in errors.root %}
+            <p>
+                {{error}}
+            </p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <input type="hidden" name="token" value="{{ csrf_token('') }}">
+
+    {% block content %}{% endblock %}
+</form>
