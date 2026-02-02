@@ -1,0 +1,49 @@
+{% set hasHelp = help or (block('help') is defined) and block('help') %}
+
+<fieldset id="{{ id }}">
+    <legend>{{ label }}</legend>
+    <twig:Input
+        :id="id ~ '-street'"
+        :name="name ~ '[street]'"
+        label="Street"
+        required
+        :value="value ? value.street"
+    />
+        {# :errors="errors.street" #}
+    <twig:Input
+        :id="id ~ '-postal-code'"
+        :name="name ~ '[postalCode]'"
+        label="Postal code"
+        required
+        :value="value ? value.postalCode"
+    />
+        {# :errors="errors.postalCode" #}
+    <twig:Input
+        :id="id ~ '-locality'"
+        :name="name ~ '[locality]'"
+        label="Locality"
+        required
+        :value="value ? value.locality"
+    />
+        {# :errors="errors.locality" #}
+    <twig:Input
+        :id="id ~ '-country'"
+        :name="name ~ '[country]'"
+        label="Country"
+        required
+        :value="value ? value.country"
+    />
+        {# :errors="errors.country" #}
+
+    {% if hasHelp %}
+        <div
+        id="help-{{ id }}"
+        >
+        {% if help %}
+            <p>{{ help }}</p>
+        {% else %}
+            {% block help %}{% endblock %}
+        {% endif %}
+        </div>
+    {% endif %}
+</fieldset>

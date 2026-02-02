@@ -6,15 +6,12 @@ namespace App\Dto;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-readonly class MyDto {public function __construct(
+readonly class CompositeFormDto {public function __construct(
     #[Assert\NotBlank(normalizer: 'trim')]
     #[Assert\Regex('/^[a-z]+(?:-[a-z]+)*$/')]
     public string $name,
     #[Assert\Email]
     public string $email,
-    #[Assert\GreaterThanOrEqual(7)]
-    #[Assert\LessThanOrEqual(77)]
-    public int $age,
-    public ?string $message = null,
-  )  { }
+    public AddressDto $address,
+  ) { }
 }

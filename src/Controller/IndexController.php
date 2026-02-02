@@ -2,7 +2,8 @@
 // src/Controller/LuckyController.php
 namespace App\Controller;
 
-use App\Dto\MyDto;
+use App\Dto\CompositeFormDto;
+use App\Dto\SimpleFormDto;
 use App\MapPayload\MapPayload;
 use App\MapPayload\MappedPayload;
 use App\MapPayload\ViolationList;
@@ -12,17 +13,46 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class IndexController extends AbstractController
 {
-    /** @param MappedPayload<MyDto> $payload */
+
     #[Route('/')]
-    public function index(
-        #[MapPayload(MyDto::class)] MappedPayload $payload,
+    public function index(): Response {
+        return $this->render('index.html.twig', [
+
+        ]);
+    }
+
+    /** @param MappedPayload<SimpleFormDto> $payload */
+    #[Route('/simple-form')]
+    public function simpleForm(
+        #[MapPayload(SimpleFormDto::class)] MappedPayload $payload,
+    ): Response {
+        if ($payload->isValid()) {
+            $submitted = print_r($payload->object, true);
+            $this->addFlash('succes', "
+                Submission ok!
+                Submitted data:
+                $submitted
+            ");
+            return $this->redirect('/');
+        }
+
+        return $this->render('simple_form.html.twig', [
+            'values' => $payload->object,
+            'errors' => $payload->violationList,
+        ]);
+    }
+
+    /** @param MappedPayload<CompositeFormDto> $payload */
+    #[Route('/composite-form')]
+    public function composedForm(
+        #[MapPayload(CompositeFormDto::class)] MappedPayload $payload,
     ): Response {
         if ($payload->isValid()) {
 
-            return $this->redirect('success');
+            return $this->redirect('/');
         }
 
-        return $this->render('index.html.twig', [
+        return $this->render('composite_form.html.twig', [
             'values' => $payload->object,
             'errors' => $payload->violationList,
         ]);
@@ -30,7 +60,7 @@ class IndexController extends AbstractController
 
     #[Route('/success')]
     public function success(): Response {
-        return $this->render('success.html.twig', [
+        return $this->render('index.html.twig', [
 
         ]);
     }
