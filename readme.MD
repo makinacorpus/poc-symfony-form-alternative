@@ -1,8 +1,8 @@
-# A new way to handle forms in Symfony
+# An alternative to the Symfony Form Component
 
-** /!\ This is a POC /!\ **
+** ⚠️⚠️ This is a POC ⚠️⚠️ **
 
-This repository is a proove of concept of a new way to handle forms in Symfony.
+This repository is a proove of concept of ana alternative way to handle forms in Symfony without the Form Component.
 
 It illustrates this article on our blog : https://makina-corpus.com/symfony/repenser-les-formulaires-symfony-une-approche-moderne
 (see below for an english version)
