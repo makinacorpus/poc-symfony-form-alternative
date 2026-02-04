@@ -4,9 +4,9 @@ namespace App\Controller;
 
 use App\Dto\CompositeFormDto;
 use App\Dto\SimpleFormDto;
-use App\MapPayload\MapPayload;
-use App\MapPayload\MappedPayload;
-use App\MapPayload\ViolationList;
+use App\FormState\FormState;
+use App\FormState\MapFormState;
+use App\FormState\ViolationList;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -21,10 +21,10 @@ class IndexController extends AbstractController
         ]);
     }
 
-    /** @param MappedPayload<SimpleFormDto> $payload */
+    /** @param FormState<SimpleFormDto> $payload */
     #[Route('/simple-form')]
     public function simpleForm(
-        #[MapPayload(SimpleFormDto::class)] MappedPayload $payload,
+        #[MapFormState(SimpleFormDto::class)] FormState $payload,
     ): Response {
         if ($payload->isValid()) {
             $submitted = print_r($payload->object, true);
@@ -42,10 +42,10 @@ class IndexController extends AbstractController
         ]);
     }
 
-    /** @param MappedPayload<CompositeFormDto> $payload */
+    /** @param FormState<CompositeFormDto> $payload */
     #[Route('/composite-form')]
     public function composedForm(
-        #[MapPayload(CompositeFormDto::class)] MappedPayload $payload,
+        #[MapFormState(CompositeFormDto::class)] FormState $payload,
     ): Response {
         if ($payload->isValid()) {
 

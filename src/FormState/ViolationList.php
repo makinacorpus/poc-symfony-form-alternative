@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\MapPayload;
+namespace App\FormState;
 
 /**
  * @implements \IteratorAggregate<string, string[]>

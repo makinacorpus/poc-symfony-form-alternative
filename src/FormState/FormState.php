@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\MapPayload;
+namespace App\FormState;
 
 /**
  * @template T of object
  */
-class MappedPayload
+class FormState
 {
     /**
      * @param ?T $object

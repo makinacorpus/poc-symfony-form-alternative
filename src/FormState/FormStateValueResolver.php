@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\MapPayload;
+namespace App\FormState;
 
 use Symfony\Component\DependencyInjection\Attribute\AsTaggedItem;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  * @template T of object
  */
  #[AsTaggedItem]
-final class MappedPayloadValueResolver implements ValueResolverInterface
+final class FormStateValueResolver implements ValueResolverInterface
 {
     public function __construct(
         private ValidatorInterface $validator,
@@ -30,24 +30,24 @@ final class MappedPayloadValueResolver implements ValueResolverInterface
     ) {}
 
     /**
-     * @return iterable<MappedPayload<T>>
+     * @return iterable<FormState<T>>
      */
     #[\Override]
     public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
-        if (MappedPayload::class !== $argument->getType()) {
+        if (FormState::class !== $argument->getType()) {
             return [];
         }
 
         $type = null;
         foreach ($argument->getAttributes() as $attribute) {
-            if ($attribute instanceof MapPayload) {
+            if ($attribute instanceof MapFormState) {
                 /** @var class-string<T> $type */
                 $type = $attribute->type;
             }
         }
         if (!$type) {
-            throw new \LogicException('Argument "' . $argument->getName() . '" needs a "' . MapPayload::class . '" attribute.');
+            throw new \LogicException('Argument "' . $argument->getName() . '" needs a "' . MapFormState::class . '" attribute.');
         }
 
         /** @var ?T $object */
@@ -57,14 +57,14 @@ final class MappedPayloadValueResolver implements ValueResolverInterface
             try {
                 $data = $request->getPayload()->all();
             } catch (\Throwable $e) {
-                return [new MappedPayload(
+                return [new FormState(
                     $object,
                     (new ViolationList($type))->add("La requête n'a pas pu être décodée."),
                 )];
             }
 
             if (!$data['token'] || !$this->csrfTokenManager->isTokenValid(new CsrfToken('', $data['token']))) {
-                return [new MappedPayload(
+                return [new FormState(
                     $object,
                     (new ViolationList($type))->add("Le jeton CSRF est invalide."),
                 )];
@@ -91,7 +91,7 @@ final class MappedPayloadValueResolver implements ValueResolverInterface
             }
         }
 
-        return [new MappedPayload(
+        return [new FormState(
             $object,
             $violationList
         )];
