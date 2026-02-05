@@ -10,14 +10,14 @@ namespace App\FormState;
 class FormState
 {
     /**
-     * @param ?T $object
+     * @param ?T $data
      */
     public function __construct(
-        public readonly ?object $object,
+        public readonly ?object $data,
         public readonly ViolationList $violationList,
     ) {}
 
-    /** @phpstan-assert-if-true !null $this->object */
+    /** @phpstan-assert-if-true !null $this->data */
     public function isValid(): bool
     {
         return !$this->empty() && (0 === \count($this->violationList));
@@ -25,6 +25,6 @@ class FormState
 
     public function empty(): bool
     {
-        return null === $this->object;
+        return null === $this->data;
     }
 }

@@ -21,40 +21,47 @@ class IndexController extends AbstractController
         ]);
     }
 
-    /** @param FormState<SimpleFormDto> $payload */
+    /** @param FormState<SimpleFormDto> $formState */
     #[Route('/simple-form')]
     public function simpleForm(
-        #[MapFormState(SimpleFormDto::class)] FormState $payload,
+        #[MapFormState(SimpleFormDto::class)] FormState $formState,
     ): Response {
-        if ($payload->isValid()) {
-            $submitted = print_r($payload->object, true);
+        if ($formState->isValid()) {
+            $submitted = print_r($formState->data, true);
             $this->addFlash('succes', "
                 Submission ok!
                 Submitted data:
                 $submitted
             ");
+
             return $this->redirect('/');
         }
 
         return $this->render('simple_form.html.twig', [
-            'values' => $payload->object,
-            'errors' => $payload->violationList,
+            'values' => $formState->data,
+            'errors' => $formState->violationList,
         ]);
     }
 
-    /** @param FormState<CompositeFormDto> $payload */
+    /** @param FormState<CompositeFormDto> $formState */
     #[Route('/composite-form')]
     public function composedForm(
-        #[MapFormState(CompositeFormDto::class)] FormState $payload,
+        #[MapFormState(CompositeFormDto::class)] FormState $formState,
     ): Response {
-        if ($payload->isValid()) {
+        if ($formState->isValid()) {
+            $submitted = print_r($formState->data, true);
+            $this->addFlash('succes', "
+                Submission ok!
+                Submitted data:
+                $submitted
+            ");
 
             return $this->redirect('/');
         }
 
         return $this->render('composite_form.html.twig', [
-            'values' => $payload->object,
-            'errors' => $payload->violationList,
+            'values' => $formState->data,
+            'errors' => $formState->violationList,
         ]);
     }
 

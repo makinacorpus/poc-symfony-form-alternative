@@ -68,11 +68,11 @@ public function myForm(
 ): Response {
     if ($formState->isValid()) {
         // Do your things here getting your submitted
-        // data with: $formState->object
+        // data with: $formState->data
     }
 
     return $this->render('my_form.html.twig', [
-        'values' => $formState->object,
+        'values' => $formState->data,
         'errors' => $formState->violationList,
     ]);
 }
@@ -140,7 +140,7 @@ class IndexController extends AbstractController
 
             // Do your thing here !
 
-            $submitted = print_r($formState->object, true);
+            $submitted = print_r($formState->data, true);
 
             $this->addFlash('succes', "
                 Submission ok!
@@ -152,7 +152,7 @@ class IndexController extends AbstractController
         }
 
         return $this->render('simple_form.html.twig', [
-            'values' => $formState->object,
+            'values' => $formState->data,
             'errors' => $formState->violationList,
         ]);
     }
