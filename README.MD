@@ -2,7 +2,7 @@
 
 ** ⚠️⚠️ This is a POC ⚠️⚠️ **
 
-This repository is a proove of concept of ana alternative way to handle forms in Symfony without the Form Component.
+This repository is a proove of concept of an alternative way to handle forms in Symfony without the Form Component.
 
 It illustrates this article on our blog : https://makina-corpus.com/symfony/repenser-les-formulaires-symfony-une-approche-moderne
 (see below for an english version)
@@ -51,8 +51,8 @@ gave us what we were missing. We then adapted their logic to manage our forms.
 ### The **MapForm­State** attribute
 
 So we came up with a new *MapFormState* attribute that works in the same way as *MapRequestPayload*.
-Except that in the event of a validation error, instead of returning a 422 response containing the
-list of errors, the process continues.
+Except that on a validation error, instead of returning a 422 response containing the list of errors,
+the process continues.
 
 The controller then receives a *FormState* object containing two properties:
 
