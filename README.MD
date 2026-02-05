@@ -56,7 +56,7 @@ the process continues.
 
 The controller then receives a *FormState* object containing two properties:
 
-- *object*: the DTO (Data Transfer Object) populated with data from the form,
+- *data*: the DTO (Data Transfer Object) populated with data from the form,
 - *violationList*: an object containing any validation errors (based on the *ConstraintViolationList* returned by Symfony's Validator component).
 
 The controller can then process the data if it is valid, or return the form with the validation errors if not.
